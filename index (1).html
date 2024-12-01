@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Animation</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      background-color: #fff;
+      height: 100vh;
+    }
+
+    /* General Styles */
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Stick figure styles (Hidden after balloon click) */
+    .stick-figure {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 200px;
+    }
+
+    .stick-figure .head {
+      width: 60px;
+      height: 60px;
+      background-color: #000;
+      border-radius: 50%;
+      margin: 0 auto;
+      position: relative;
+      top: 10px;
+    }
+
+    .stick-figure .body {
+      width: 16px;
+      height: 100px;
+      background-color: #000;
+      margin: 0 auto;
+      position: relative;
+      top: 20px;
+    }
+
+    .stick-figure .arms {
+      position: absolute;
+      width: 120px;
+      height: 16px;
+      background-color: #000;
+      top: 40px;
+      left: -60px;
+    }
+
+    .stick-figure .legs {
+      position: absolute;
+      width: 120px;
+      height: 16px;
+      background-color: #000;
+      top: 130px;
+      left: -60px;
+    }
+
+    /* Balloon */
+    .balloon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #00f;
+      width: 40px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+      cursor: pointer;
+      transition: transform 0.5s ease;
+    }
+
+    .balloon-string {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100px;
+      background-color: #000;
+    }
+
+    /* Message and Transition Effects */
+    .message {
+      display: none;
+      text-align: center;
+      font-size: 2em;
+      font-family: 'Dancing Script', cursive;
+      color: #333;
+      font-weight: bold;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      word-wrap: break-word;
+    }
+
+    .message span {
+      display: inline-block;
+      opacity: 0;
+      animation: typing 15s steps(60) 1s forwards;
+    }
+
+    /* Envelope */
+    .envelope {
+      display: none;
+      width: 250px;
+      height: 150px;
+      background-color: #fff;
+      border: 2px solid #d3d3d3;
+      border-radius: 15px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    .envelope .flap {
+      width: 100%;
+      height: 20px;
+      background-color: #ffb6c1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 15px 15px 0 0;
+    }
+
+    /* Tap Here Animation */
+    .tap-here {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2em;
+      font-family: 'Comic Sans MS', cursive;
+      color: #ff69b4;
+      animation: blink 1s infinite;
+      font-weight: bold;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* Writing animation */
+    .writing {
+      display: none;
+      text-align: center;
+      font-size: 1.5em;
+      font-family: 'Dancing Script', cursive;
+      color: #ff69b4;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      width: 80%;
+      margin: 0 auto;
+      line-height: 1.5em;
+      opacity: 0;
+      animation: writing 10s forwards 1s;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes writing {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="balloon" class="balloon">
+    <div class="balloon-string"></div>
+  </div>
+
+  <div id="message" class="message"></div>
+
+  <div id="envelope" class="envelope">
+    <div class="flap"></div>
+  </div>
+
+  <div id="tap-here" class="tap-here">Tap here</div>
+
+  <div id="writing" class="writing">
+    Hi honey, I love you so much and will go to any lengths to do something as special as I can on your every birthday to make sure you know how special this day is for me that you are here.Although this is so glitchya nd shitty vut i thought to code for my amazing boyfriend and display my love in this way hehhe..i am so sorry that its so bad but i loveee youu🥺 I cannot be grateful enough to have you in my life. You are now 20, out of your teens and already so amazing. I will always be here for you. I know you are going to rock your 20s and i am happy i am gonna see it all Love you <3. 
+  </div>
+
+  <script>
+    const balloon = document.getElementById("balloon");
+    const message = document.getElementById("message");
+    const envelope = document.getElementById("envelope");
+    const tapHere = document.getElementById("tap-here");
+    const writing = document.getElementById("writing");
+    const body = document.body;
+
+    const messageText = "Wishing you happiest 20th birthday";
+
+    balloon.addEventListener("click", function () {
+      // Enlarge the balloon
+      balloon.style.transform = "translate(-50%, -50%) scale(400)";
+      
+      // Remove stick figure and show message slowly
+      setTimeout(() => {
+        message.innerHTML = messageText.split("").map(char => `<span>${char}</span>`).join("");
+        message.style.display = "block";
+        message.querySelectorAll('span').forEach((span, index) => {
+          setTimeout(() => {
+            span.style.opacity = 1;
+          }, index * 200); // Adjust typing speed
+        });
+      }, 1000);
+
+      // Fade away to white background after message
+      setTimeout(() => {
+        body.style.backgroundColor = "white";
+        message.style.display = "none";
+      }, 7000); // After 7 seconds
+
+      // Show envelope after white background
+      setTimeout(() => {
+        envelope.style.display = "block";
+        tapHere.style.display = "block";
+      }, 10000); // After 10 seconds
+    });
+
+    envelope.addEventListener("click", function () {
+      // Clear everything and show the final message
+      envelope.style.display = "none";
+      tapHere.style.display = "none";
+      body.style.backgroundColor = "white";
+      writing.style.display = "block";
+    });
+
+  </script>
+
+</body>
+</html>
